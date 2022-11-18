@@ -1,18 +1,47 @@
 require('dotenv').config();
-const {Pool} = require('pg');
+import mongoose from 'mongoose';
+const { Schema } = mongoose;
+mongoose.connect(`mongodb+srv://${MONGOUSER}:${MONGOPSSWD}@quatro.3qnhhgk.mongodb.net/?retryWrites=true&w=majority`);
 
-const pool = new Pool({
-  // user: 'me',
-  // host: 'localhost',
-  // database: 'atelier',
-  // port: 5432,
-  user: process.env.PGUSER,
-  host: process.env.PGHOST,
-  database: process.env.PGDATABASE,
-  password: process.env.PGPASSWORD,
-  port: 5432,
+const orderSchema = new Schema({
+  intro: String,
+  customerType: String,
+  firstName: String,
+  lastName: String,
+  current Boolean,
+  orderType: String,
+  phone: String,
+  email: String,
+  address: String,
+  weight: String,
+  height: String,
+  level: String,
+  approvedBy: String,
+  style: String,
+  length: Number,
+  width: Number,
+  thickness: Number,
+  volume: Number,
+  tail: Number,
+  blank: String,
+  construction: String,
+  boardColor: String,
+  finSetup: String,
+  boxType: String,
+  boxColor: String,
+  inserts: String,
+  rearStrap: String,
+  strapWidth: String,
+  stance: String,
+  leash: String,
+  pads: String,
+  waves: String,
+  finFromTail: String,
+  boxLocation: String,
+  rearInsertsFromTail: String,
+  handle Boolean,
+  date: Date.now()
 });
 
-module.exports = {
-  query: (text, params) => pool.query(text, params),
-};
+let Order = mongoose.model('Order', orderSchema);
+

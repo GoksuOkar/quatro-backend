@@ -1,6 +1,8 @@
 CREATE TABLE orders (
   id SERIAL PRIMARY KEY NOT NULL,
   oderNum VARCHAR(50) GENERATED ALWAYS AS ( generate_custom_id(id)) STORED,
+  intro varchar(20),
+  customerType varchar(20),
   firstName varchar(50) NOT NULL,
   lastName varchar(50) NOT NULL,
   current boolean,
@@ -35,7 +37,6 @@ CREATE TABLE orders (
   boxLocation varchar(20),
   rearInsertsFromTail varchar(20),
   handle boolean,
-  type varchar(20),
   created_at timestamp default current_timestamp
 );
 
