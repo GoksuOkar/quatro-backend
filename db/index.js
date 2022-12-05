@@ -1,28 +1,28 @@
 require('dotenv').config();
-import mongoose from 'mongoose';
+const mongoose = require('mongoose');
 const { Schema } = mongoose;
-mongoose.connect(`mongodb+srv://${MONGOUSER}:${MONGOPSSWD}@quatro.3qnhhgk.mongodb.net/?retryWrites=true&w=majority`);
+
+// const connectionString = `mongodb+srv://${process.env.MONGOUSER}:${process.env.MONGOPSSWD}@quatro.3qnhhgk.mongodb.net/?retryWrites=true&w=majority`
+
+// mongoose.connect(connectionString);
+
+//module.exports = mongoose.connection.db.collection('orders');
 
 const orderSchema = new Schema({
   intro: String,
   customerType: String,
-  firstName: String,
-  lastName: String,
-  current Boolean,
+  current: Boolean,
   orderType: String,
-  phone: String,
-  email: String,
-  address: String,
-  weight: String,
+  weight: Number,
   height: String,
   level: String,
   approvedBy: String,
   style: String,
-  length: Number,
+  length: String,
   width: Number,
   thickness: Number,
   volume: Number,
-  tail: Number,
+  tail: String,
   blank: String,
   construction: String,
   boardColor: String,
@@ -39,9 +39,22 @@ const orderSchema = new Schema({
   finFromTail: String,
   boxLocation: String,
   rearInsertsFromTail: String,
-  handle Boolean,
-  date: Date.now()
-});
+  handle: Boolean,
+  date: String,
+  orderId: Number
+},);
 
-let Order = mongoose.model('Order', orderSchema);
+const customerSchema = new Schema({
+  firstName: String,
+  lastName: String,
+  phone: String,
+  email: String,
+  address: String,
+})
 
+
+
+module.exports = {
+  Order: mongoose.model('Order', orderSchema),
+  Customer: mongoose.model('Customer', customerSchema)
+}

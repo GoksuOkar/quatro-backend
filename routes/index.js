@@ -1,24 +1,35 @@
 const router = require('express').Router();
+const Schemas = require('../db');
+const mongoose = require('mongoose');
 const controller = require('../controllers');
-const db = require('../dbSQL');
-// const controller = require('../controllers');
 
-const params = ["firstName", "lastName", "current", "orderType", "phone", "email", "address", "weight", "height", "level", "style", "tail", "construction", "boardColor", "finSetup"];
-
-router.get('/', (req, res) => {
-  // req will carry an object, keys for columns, values for the values
-  // obj keys and join
-  // obj values and join
-  // db.query(
-  //   `INSERT INTO orders (${params.join()})
-  //   VALUES ('jane', 'okar', 'false', 'walkin', '8083854668', 'goksu@gmail.com', '284 Ikalani Pl. Makawao, Hawaii, 96768', '145', '5.7', 'advanced', 'asymmetrical', 'swallow', 'carbon', 'pink', 'quad')`
-  //   )
-    console.log('here');
-    db.query(
-      `select * from orders`
-    ).then((data) => res.send(data.rows))
+router.post('/customers', (req, res) => {
+  controller.createCustomer(req.body).then((result) => {
+    res.send(result);
+  })
 });
 
-router.post('/create-order', )
+router.get('/customers', (req, res) => {
+  const nameObj = req.data;
+  controller.getCustomerByName(nameObj).then((result) =>{
+    if (result) {
+      res.send(result);
+    } else {
+      res.send(false);
+    }
+  })
+});
+
+router.post('/new-order', (req, res) => {
+  //req body should have all the fields
+  let order = new Schemas.Order(req.body);
+  order
+    .save()
+    .then((result) => res.send('posted'));
+});
+
+router.get('/new-order', (req, res) => {
+  res.send('here');
+})
 
 module.exports = router;

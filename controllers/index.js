@@ -1,9 +1,10 @@
-const model = require('../models');
+const Schemas = require('../db');
 
 module.exports = {
-  createOrder: function(req, res) {
-    const cols = Object.keys(req.body);
-    const vals = Object.values(req.body);
-    model.addNewOrder(cols, vals);
-  }
+  getCustomerByName: (nameObj) => (
+    Schemas.Customer.findOne(nameObj)
+  ),
+  createCustomer: (customerInfo) => (
+    Schemas.Customer.create(customerInfo)
+  )
 }
