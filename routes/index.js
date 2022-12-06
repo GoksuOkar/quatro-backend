@@ -9,8 +9,9 @@ router.post('/customers', (req, res) => {
   })
 });
 
-router.get('/customers', (req, res) => {
-  const nameObj = req.data;
+router.get('/customers/:firstName-:lastName', (req, res) => {
+  const nameObj = req.params;
+  console.log(req.params);
   controller.getCustomerByName(nameObj).then((result) =>{
     if (result) {
       res.send(result);
@@ -20,15 +21,15 @@ router.get('/customers', (req, res) => {
   })
 });
 
-router.post('/new-order', (req, res) => {
+router.post('/orders', (req, res) => {
   //req body should have all the fields
-  let order = new Schemas.Order(req.body);
-  order
-    .save()
-    .then((result) => res.send('posted'));
+  controller.createOrder(req.body)
+    .then((result) => {
+      controller.getOrderById(result._id).then((newResult) => res.send(newResult))
+    });
 });
 
-router.get('/new-order', (req, res) => {
+router.get('/orders/:id', (req, res) => {
   res.send('here');
 })
 

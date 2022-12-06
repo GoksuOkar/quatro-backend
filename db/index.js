@@ -41,7 +41,8 @@ const orderSchema = new Schema({
   rearInsertsFromTail: String,
   handle: Boolean,
   date: String,
-  orderId: Number
+  orderId: Number,
+  customerId: String,
 },);
 
 const customerSchema = new Schema({
