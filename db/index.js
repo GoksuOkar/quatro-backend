@@ -13,9 +13,6 @@ const orderSchema = new Schema({
   customerType: String,
   current: Boolean,
   orderType: String,
-  weight: Number,
-  height: String,
-  level: String,
   approvedBy: String,
   style: String,
   length: String,
@@ -51,6 +48,9 @@ const customerSchema = new Schema({
   phone: String,
   email: String,
   address: String,
+  weight: Number,
+  height: String,
+  level: String,
 })
 
 
