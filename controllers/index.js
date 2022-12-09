@@ -20,5 +20,8 @@ module.exports = {
   ),
   getOrderById: (_id) => (
     Schemas.Order.findOne({ _id })
+  ),
+  getSequence: () => (
+    Schemas.Counter.findOneAndUpdate({}, {$inc: {seq_value: 1}}, {returnDocument: 'after'})
   )
 };

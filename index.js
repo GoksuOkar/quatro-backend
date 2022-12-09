@@ -11,6 +11,7 @@ const connectionString = `mongodb+srv://${process.env.MONGOUSER}:${process.env.M
 
 const db = mongoose.connect(connectionString);
 
+
 const port = 3000;
 
 app.use(morgan('dev'));
@@ -23,4 +24,4 @@ app.set('port', port);
 app.listen(port, () => console.log(`listening on port ${port}`));
 
 
-
+module.exports = db;

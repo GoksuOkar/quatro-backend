@@ -53,9 +53,14 @@ const customerSchema = new Schema({
   level: String,
 })
 
+const counterSchema = new Schema({
+  seq_value: Number,
+})
+
 
 
 module.exports = {
   Order: mongoose.model('Order', orderSchema),
-  Customer: mongoose.model('Customer', customerSchema)
+  Customer: mongoose.model('Customer', customerSchema),
+  Counter: mongoose.model('Counter', counterSchema)
 }
