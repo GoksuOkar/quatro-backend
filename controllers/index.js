@@ -10,9 +10,9 @@ module.exports = {
   createCustomer: (customerInfo) => (
     Schemas.Customer.create(customerInfo)
   ),
-  getOrderByCustomerId: () => {
-    //todo
-  },
+  getOrderByCustomerId: (customerId) => (
+    Schemas.Order.find({ cutomerId })
+  ),
   createOrder: (orderInfo) => (
     Schemas.Order.create(orderInfo)
   ),

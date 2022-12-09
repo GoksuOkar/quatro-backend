@@ -11,7 +11,6 @@ router.post('/customers', (req, res) => {
 
 router.get('/customers/:firstName-:lastName', (req, res) => {
   const nameObj = req.params;
-  console.log(req.params);
   controller.getCustomerByName(nameObj).then((result) =>{
     if (result) {
       res.send(result);
@@ -26,11 +25,12 @@ router.post('/orders', (req, res) => {
   controller.createOrder(req.body)
     .then((result) => {
       controller.getOrderById(result._id).then((newResult) => res.send(newResult))
-    });
+  });
 });
 
-router.get('/orders/:id', (req, res) => {
-  res.send('here');
+router.get('/orders/:customerId', (req, res) => {
+  controller.getOrderByCustomerId(req.params.customerId)
+  .then((result) => res.send(result));
 })
 
 module.exports = router;
