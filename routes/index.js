@@ -23,8 +23,14 @@ router.get('/customers/:firstName-:lastName', (req, res) => {
 router.post('/orders', (req, res) => {
   //req body should have all the fields
   controller.createOrder(req.body)
+    // .then((result) => res.send(result));
     .then((result) => {
-      controller.getOrderById(result._id).then((newResult) => res.send(newResult))
+      controller.getOrderById(result._id).then((newResult) => {
+        console.log(newResult)
+        if (newResult.orderId !== undefined) {
+          res.send(newResult)
+        }
+    })
   });
 });
 

@@ -11,9 +11,11 @@ module.exports = {
     Schemas.Customer.create(customerInfo)
   ),
   getOrderByCustomerId: (customerId) => (
-    Schemas.Order.find({ cutomerId })
+    Schemas.Order.find({ customerId })
   ),
   createOrder: (orderInfo) => (
+    // require customerId
+    // return an error if not
     Schemas.Order.create(orderInfo)
   ),
   getOrderById: (_id) => (
