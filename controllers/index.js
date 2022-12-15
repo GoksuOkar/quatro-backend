@@ -52,7 +52,6 @@ module.exports = {
     db.findCustomer(req.params)
       .then((result) => {
         let customerId = result._id.valueOf();
-        console.log({ customerId })
         db.findOrders({ customerId })
           .then(result => res.send(result))
       })
