@@ -1,27 +1,60 @@
-const Schemas = require('../db');
+const db = require('../db');
 
 module.exports = {
-  getCustomerByName: (nameObj) => {
+  getCustomerByName: (req, res) => {
+    const nameObj = req.params;
     let { firstName, lastName } = nameObj;
     firstName = firstName.toLowerCase();
     lastName = lastName.toLowerCase();
-    return Schemas.Customer.findOne({ firstName, lastName })
+    db.findCustomer({firstName, lastName})
+      .then((result) => {
+        if (result) {
+          res.send(result);
+        } else {
+          res.send(false);
+        }
+      })
   },
-  createCustomer: (customerInfo) => (
-    Schemas.Customer.create(customerInfo)
-  ),
-  getOrderByCustomerId: (customerId) => (
-    Schemas.Order.find({ customerId })
-  ),
-  createOrder: (orderInfo) => (
-    // require customerId
-    // return an error if not
-    Schemas.Order.create(orderInfo)
-  ),
-  getOrderById: (_id) => (
-    Schemas.Order.findOne({ _id })
-  ),
-  getSequence: () => (
-    Schemas.Counter.findOneAndUpdate({}, {$inc: {seq_value: 1}}, {returnDocument: 'after'})
-  )
+  createCustomer: (req, res) =>
+  {
+    db.createCustomer(req.body)
+      .then((result) => {
+        res.send(result)
+      })
+      .catch((err) => res.send(err))
+  },
+  getOrderByCustomerId: (req, res) => {
+    let { customerId } = req.params;
+    db.findOrders({ customerId })
+      .then((result) => res.send(result))
+      .catch(err => res.send(err))
+  },
+  createOrder: (req, res) => {
+    db.incrementSequence()
+      .then((result) => {
+        const orderId = result.seq_value;
+        db.createOrder({...req.body, orderId})
+          .then((newResult) => {
+            res.send(newResult)
+          })
+          .catch((err) => {
+            db.decrementSequence();
+            console.log(err);
+          })
+      })
+  },
+  getOrdersByType: (req, res) => {
+    db.findOrders(req.params)
+      .then((result) => res.send(result))
+      .catch(err => res.send(err))
+  },
+  getCustomerOrders: (req, res) => {
+    db.findCustomer(req.params)
+      .then((result) => {
+        let customerId = result._id.valueOf();
+        console.log({ customerId })
+        db.findOrders({ customerId })
+          .then(result => res.send(result))
+      })
+  }
 };

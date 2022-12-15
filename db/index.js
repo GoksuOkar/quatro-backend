@@ -57,10 +57,17 @@ const counterSchema = new Schema({
   seq_value: Number,
 })
 
+const Order = mongoose.model('Order', orderSchema);
+const Customer = mongoose.model('Customer', customerSchema);
+const Counter = mongoose.model('Counter', counterSchema);
+
 
 
 module.exports = {
-  Order: mongoose.model('Order', orderSchema),
-  Customer: mongoose.model('Customer', customerSchema),
-  Counter: mongoose.model('Counter', counterSchema)
+  findCustomer: (input) => (Customer.findOne(input)),
+  createCustomer: (inputObj) => (Customer.create(inputObj)),
+  findOrders: (inputObj) => (Order.find(inputObj)),
+  createOrder: (orderInfoObj) => (Order.create(orderInfoObj)),
+  incrementSequence: () => (Counter.findOneAndUpdate({}, {$inc: {seq_value: 1}}, {returnDocument: 'after'})),
+  decrementSequence: () => (Counter.findOneAndUpdate({}, {$inc: {seq_value: -1}}, {returnDocument: 'after'}))
 }
