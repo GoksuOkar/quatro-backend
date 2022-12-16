@@ -51,9 +51,13 @@ module.exports = {
   getCustomerOrders: (req, res) => {
     db.findCustomer(req.params)
       .then((result) => {
-        let customerId = result._id.valueOf();
-        db.findOrders({ customerId })
-          .then(result => res.send(result))
+        if (result) {
+          let customerId = result._id.valueOf();
+          db.findOrders({ customerId })
+            .then(result => res.send(result))
+        } else {
+          res.send("customer not found")
+        }
       })
   }
 };

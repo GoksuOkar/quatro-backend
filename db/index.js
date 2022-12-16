@@ -15,7 +15,8 @@ const orderSchema = new Schema({
   orderType: String,
   approvedBy: String,
   style: String,
-  length: String,
+  lengthFt: Number,
+  lengthIn: Number,
   width: Number,
   thickness: Number,
   volume: Number,
@@ -40,6 +41,7 @@ const orderSchema = new Schema({
   date: String,
   orderId: Number,
   customerId: String,
+  customerName: String,
 },);
 
 const customerSchema = new Schema({
@@ -49,7 +51,8 @@ const customerSchema = new Schema({
   email: String,
   address: String,
   weight: Number,
-  height: String,
+  heightFt: Number,
+  heightIn: Number,
   level: String,
 })
 
