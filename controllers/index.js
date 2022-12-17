@@ -15,6 +15,13 @@ module.exports = {
         }
       })
   },
+  getCustomerById: (req, res) => {
+    db.findCustomer(req.params)
+      .then((result) => {
+        res.send(result)
+      })
+      .catch((err) => res.send(err))
+  },
   createCustomer: (req, res) =>
   {
     db.createCustomer(req.body)

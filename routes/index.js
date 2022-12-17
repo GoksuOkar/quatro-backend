@@ -7,6 +7,8 @@ router.post('/customers', controller.createCustomer);
 
 router.get('/customers/:firstName-:lastName', controller.getCustomerByName);
 
+router.get('/customers/id/:_id', controller.getCustomerById);
+
 router.post('/orders', controller.createOrder);
 
 router.get('/orders/:orderType', controller.getOrdersByType);
