@@ -38,7 +38,7 @@ const orderSchema = new Schema({
   boxLocation: String,
   rearInsertsFromTail: String,
   handle: Boolean,
-  date: String,
+  date: {type: Date, default: Date.now},
   orderId: Number,
   customerId: String,
   customerName: String,
@@ -69,7 +69,7 @@ const Counter = mongoose.model('Counter', counterSchema);
 module.exports = {
   findCustomer: (input) => (Customer.findOne(input)),
   createCustomer: (inputObj) => (Customer.create(inputObj)),
-  findOrders: (inputObj) => (Order.find(inputObj)),
+  findOrders: (inputObj) => (Order.find(inputObj).sort({date: -1})),
   createOrder: (orderInfoObj) => (Order.create(orderInfoObj)),
   incrementSequence: () => (Counter.findOneAndUpdate({}, {$inc: {seq_value: 1}}, {returnDocument: 'after'})),
   decrementSequence: () => (Counter.findOneAndUpdate({}, {$inc: {seq_value: -1}}, {returnDocument: 'after'}))
