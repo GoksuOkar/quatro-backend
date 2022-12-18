@@ -12,7 +12,7 @@ const connectionString = `mongodb+srv://${process.env.MONGOUSER}:${process.env.M
 const db = mongoose.connect(connectionString);
 
 
-const port = 3000;
+const port = process.env.PORT || 3000;
 
 app.use(morgan('dev'));
 app.use(express.json());
