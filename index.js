@@ -7,9 +7,10 @@ const cors = require('cors');
 
 const app = express();
 
-const connectionString = `mongodb+srv://${process.env.MONGOUSER}:${process.env.MONGOPSSWD}@quatro.3qnhhgk.mongodb.net/quatro?retryWrites=true&w=majority`
+const connectionString = `mongodb+srv://${process.env.MONGOUSER}:${process.env.MONGOPSSWD}@quatro.sgb5fdh.mongodb.net/quatro?retryWrites=true&w=majority`
 
 const db = mongoose.connect(connectionString);
+
 
 const port = 3000;
 
@@ -23,4 +24,4 @@ app.set('port', port);
 app.listen(port, () => console.log(`listening on port ${port}`));
 
 
-
+module.exports = db;

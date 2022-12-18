@@ -13,12 +13,10 @@ const orderSchema = new Schema({
   customerType: String,
   current: Boolean,
   orderType: String,
-  weight: Number,
-  height: String,
-  level: String,
   approvedBy: String,
   style: String,
-  length: String,
+  lengthFt: Number,
+  lengthIn: Number,
   width: Number,
   thickness: Number,
   volume: Number,
@@ -40,8 +38,10 @@ const orderSchema = new Schema({
   boxLocation: String,
   rearInsertsFromTail: String,
   handle: Boolean,
-  date: String,
-  orderId: Number
+  date: {type: Date, default: Date.now},
+  orderId: Number,
+  customerId: String,
+  customerName: String,
 },);
 
 const customerSchema = new Schema({
@@ -50,11 +50,27 @@ const customerSchema = new Schema({
   phone: String,
   email: String,
   address: String,
+  weight: Number,
+  heightFt: Number,
+  heightIn: Number,
+  level: String,
 })
+
+const counterSchema = new Schema({
+  seq_value: Number,
+})
+
+const Order = mongoose.model('Order', orderSchema);
+const Customer = mongoose.model('Customer', customerSchema);
+const Counter = mongoose.model('Counter', counterSchema);
 
 
 
 module.exports = {
-  Order: mongoose.model('Order', orderSchema),
-  Customer: mongoose.model('Customer', customerSchema)
+  findCustomer: (input) => (Customer.findOne(input)),
+  createCustomer: (inputObj) => (Customer.create(inputObj)),
+  findOrders: (inputObj) => (Order.find(inputObj).sort({date: -1})),
+  createOrder: (orderInfoObj) => (Order.create(orderInfoObj)),
+  incrementSequence: () => (Counter.findOneAndUpdate({}, {$inc: {seq_value: 1}}, {returnDocument: 'after'})),
+  decrementSequence: () => (Counter.findOneAndUpdate({}, {$inc: {seq_value: -1}}, {returnDocument: 'after'}))
 }
