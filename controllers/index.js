@@ -1,6 +1,16 @@
 const db = require('../db');
 
 module.exports = {
+  getAllCustomers: (req, res) => {
+    db.allCustomers().then((result) => {res.send(result)})
+    .catch((err) => res.send(err));
+  },
+  editCustomer: (req, res) => {
+    const newInfo = req.body;
+    db.updateCustomer(newInfo).then((result) => {
+      res.send(result)
+    }).catch(err => res.send(err))
+  },
   getCustomerByName: (req, res) => {
     const nameObj = req.params;
     let { firstName, lastName } = nameObj;

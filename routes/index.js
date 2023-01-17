@@ -5,6 +5,10 @@ const controller = require('../controllers');
 
 router.post('/customers', controller.createCustomer);
 
+router.post('/customer', controller.editCustomer);
+
+router.get('/customers', controller.getAllCustomers);
+
 router.get('/customers/:firstName-:lastName', controller.getCustomerByName);
 
 router.get('/customers/id/:_id', controller.getCustomerById);
