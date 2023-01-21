@@ -68,11 +68,15 @@ const Counter = mongoose.model('Counter', counterSchema);
 
 module.exports = {
   findCustomer: (input) => (Customer.findOne(input)),
-  allCustomers: (input) => (Customer.find().sort({firstName: 1}).collation({locale: "en", caseLevel: true})),
+  allCustomers: () => (Customer.find().sort({firstName: 1}).collation({locale: "en", caseLevel: true})),
   updateCustomer: (newInfo) => (Customer.findOneAndUpdate({_id: newInfo._id}, newInfo, {new: true})),
   createCustomer: (inputObj) => (Customer.create(inputObj)),
   findOrders: (inputObj) => (Order.find(inputObj).sort({date: -1})),
-  createOrder: (orderInfoObj) => (Order.create(orderInfoObj)),
+  createOrder: (info) => (Order.create(info)),
+  editOrder: (filter, update) => (Order.findOneAndUpdate(filter, update, {new: true, upsert: false})),
   incrementSequence: () => (Counter.findOneAndUpdate({}, {$inc: {seq_value: 1}}, {returnDocument: 'after'})),
   decrementSequence: () => (Counter.findOneAndUpdate({}, {$inc: {seq_value: -1}}, {returnDocument: 'after'}))
 }
+
+//module.exports.editOrder({orderId: "13"}, {approvedBy: "pascal"}).then((res) => console.log(res));
+//module.exports.allCustomers().then((res) => console.log(res).catch(err => console.log(err)));

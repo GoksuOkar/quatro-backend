@@ -13,7 +13,7 @@ router.get('/customers/:firstName-:lastName', controller.getCustomerByName);
 
 router.get('/customers/id/:_id', controller.getCustomerById);
 
-router.post('/orders', controller.createOrder);
+router.post('/orders', controller.createOrEditOrder);
 
 router.get('/orders/:orderType', controller.getOrdersByType);
 

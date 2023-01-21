@@ -46,19 +46,29 @@ module.exports = {
       .then((result) => res.send(result))
       .catch(err => res.send(err))
   },
-  createOrder: (req, res) => {
-    db.incrementSequence()
-      .then((result) => {
-        const orderId = result.seq_value;
-        db.createOrder({...req.body, orderId})
-          .then((newResult) => {
-            res.send(newResult)
-          })
-          .catch((err) => {
-            db.decrementSequence();
-            console.log(err);
-          })
-      })
+  createOrEditOrder: (req, res) => {
+    if (req.body.orderId) {
+      const _id = req.body._id.valueOf();
+      delete req.body._id;
+      db.editOrder({ _id }, req.body)
+        .then((result) => {
+          res.send(result)
+        })
+        .catch(err => console.log(err));
+    } else {
+      db.incrementSequence()
+        .then((result) => {
+          const orderId = result.seq_value;
+          db.createOrder({orderId}, {...req.body, orderId})
+            .then((newResult) => {
+              res.send(newResult)
+            })
+            .catch((err) => {
+              db.decrementSequence();
+              console.log(err);
+            })
+        })
+    }
   },
   getOrdersByType: (req, res) => {
     db.findOrders(req.params)
