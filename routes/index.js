@@ -17,6 +17,6 @@ router.post('/orders', controller.createOrEditOrder);
 
 router.get('/orders/:orderType', controller.getOrdersByType);
 
-router.get('/:firstName-:lastName/orders', controller.getCustomerOrders);
+router.get('/customers/:firstName-:lastName/orders', controller.getCustomerOrders);
 
 module.exports = router;
