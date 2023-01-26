@@ -73,20 +73,28 @@ module.exports = {
     }
   },
   getOrdersByType: (req, res) => {
-    db.findOrders(req.params)
+    const { orderType, page } = req.params;
+    db.findOrders({orderType}, page)
       .then((result) => res.send(result))
-      .catch(err => res.send(err))
+      .catch(err => console.log(err))
   },
   getCustomerOrders: (req, res) => {
-    db.findCustomer(req.params)
+    const {firstName, lastName, page} = req.params;
+    db.findCustomer({firstName, lastName})
       .then((result) => {
         if (result) {
           let customerId = result._id.valueOf();
-          db.findOrders({ customerId })
+          db.findOrders({ customerId }, page)
             .then(result => res.send(result))
         } else {
           res.send("customer not found")
         }
       })
+  },
+  getAllOrders: (req, res) => {
+    const { page } = req.params;
+    db.findOrders({}, page)
+      .then((result) => res.send(result))
+      .catch(err => res.send(err))
   }
 };

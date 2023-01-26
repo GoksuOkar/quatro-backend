@@ -72,7 +72,17 @@ module.exports = {
   allCustomers: () => (Customer.find().sort({firstName: 1}).collation({locale: "en", caseLevel: true})),
   updateCustomer: (newInfo) => (Customer.findOneAndUpdate({_id: newInfo._id}, newInfo, {new: true})),
   createCustomer: (inputObj) => (Customer.create(inputObj)),
-  findOrders: (inputObj) => (Order.find(inputObj).sort({date: -1})),
+  //findOrders: (inputObj) => (Order.find(inputObj).sort({date: -1})),
+  findOrders: (toMatch, page) => (Order.aggregate().facet({
+    totalData: [
+      {$match: toMatch},
+      {$skip: page - 1},
+      {$limit: 20}
+    ],
+    totalCount: [
+      {$count: "count"}
+    ]
+  })),
   createOrder: (info) => (Order.create(info)),
   editOrder: (filter, update) => (Order.findOneAndUpdate(filter, update, {new: true, upsert: false})),
   incrementSequence: () => (Counter.findOneAndUpdate({}, {$inc: {seq_value: 1}}, {returnDocument: 'after'})),
