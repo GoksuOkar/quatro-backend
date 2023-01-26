@@ -46,6 +46,8 @@ module.exports = {
       .then((result) => res.send(result))
       .catch(err => res.send(err))
   },
+  // if order is for editing, finds and edits the order matching object id
+  // if order is new, creates the order. Uses two different functions from the db
   createOrEditOrder: (req, res) => {
     if (req.body.orderId) {
       const _id = req.body._id.valueOf();
@@ -59,7 +61,7 @@ module.exports = {
       db.incrementSequence()
         .then((result) => {
           const orderId = result.seq_value;
-          db.createOrder({orderId}, {...req.body, orderId})
+          db.createOrder({...req.body, orderId})
             .then((newResult) => {
               res.send(newResult)
             })
