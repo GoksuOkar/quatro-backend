@@ -1,5 +1,10 @@
 const db = require('../db');
 
+function getLastTwoDigitsOfYear() {
+  let date = new Date();
+  return date.getFullYear() % 2000;
+}
+
 module.exports = {
   getAllCustomers: (req, res) => {
     db.allCustomers().then((result) => {res.send(result)})
@@ -60,7 +65,8 @@ module.exports = {
     } else {
       db.incrementSequence()
         .then((result) => {
-          const orderId = result.seq_value;
+          const year = getLastTwoDigitsOfYear();
+          const orderId = `FM${year}-00${result.seq_value}`;
           db.createOrder({...req.body, orderId})
             .then((newResult) => {
               res.send(newResult)
@@ -92,8 +98,7 @@ module.exports = {
       })
   },
   getAllOrders: (req, res) => {
-    const { page } = req.params;
-    db.findOrders({}, page)
+    db.findOrders()
       .then((result) => res.send(result))
       .catch(err => res.send(err))
   }
