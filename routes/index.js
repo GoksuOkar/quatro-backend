@@ -17,4 +17,6 @@ router.post('/orders', controller.createOrEditOrder);
 
 router.get('/orders', controller.getAllOrders);
 
+router.get('/orders/:orderType', controller.getOrdersByType);
+
 module.exports = router;

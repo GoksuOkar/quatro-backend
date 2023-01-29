@@ -79,10 +79,10 @@ module.exports = {
     }
   },
   getOrdersByType: (req, res) => {
-    const { orderType, page } = req.params;
-    db.findOrders({orderType}, page)
+    const { orderType } = req.params;
+    db.findOrders({orderType})
       .then((result) => res.send(result))
-      .catch(err => console.log(err))
+      .catch(err => res.send(err))
   },
   getCustomerOrders: (req, res) => {
     const {firstName, lastName, page} = req.params;
