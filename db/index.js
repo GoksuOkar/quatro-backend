@@ -40,9 +40,10 @@ const orderSchema = new Schema({
   rearInsertsFromTail: String,
   handle: Boolean,
   date: {type: Date, default: Date.now},
-  orderId: Number,
+  orderId: String,
   customerId: String,
   customerName: String,
+  notes: String,
 },);
 
 const customerSchema = new Schema({
@@ -72,7 +73,7 @@ module.exports = {
   allCustomers: () => (Customer.find().sort({firstName: 1}).collation({locale: "en", caseLevel: true})),
   updateCustomer: (newInfo) => (Customer.findOneAndUpdate({_id: newInfo._id}, newInfo, {new: true})),
   createCustomer: (inputObj) => (Customer.create(inputObj)),
-  findOrders: (inputObj) => (Order.find(inputObj).sort({date: -1})),
+  findOrders: (obj) => (Order.find(obj).sort({date: -1})),
   createOrder: (info) => (Order.create(info)),
   editOrder: (filter, update) => (Order.findOneAndUpdate(filter, update, {new: true, upsert: false})),
   incrementSequence: () => (Counter.findOneAndUpdate({}, {$inc: {seq_value: 1}}, {returnDocument: 'after'})),

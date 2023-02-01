@@ -1,5 +1,10 @@
 const db = require('../db');
 
+function getLastTwoDigitsOfYear() {
+  let date = new Date();
+  return date.getFullYear() % 2000;
+}
+
 module.exports = {
   getAllCustomers: (req, res) => {
     db.allCustomers().then((result) => {res.send(result)})
@@ -60,7 +65,8 @@ module.exports = {
     } else {
       db.incrementSequence()
         .then((result) => {
-          const orderId = result.seq_value;
+          const year = getLastTwoDigitsOfYear();
+          const orderId = `FM${year}-${result.seq_value}`;
           db.createOrder({...req.body, orderId})
             .then((newResult) => {
               res.send(newResult)
@@ -73,20 +79,27 @@ module.exports = {
     }
   },
   getOrdersByType: (req, res) => {
-    db.findOrders(req.params)
+    const { orderType } = req.params;
+    db.findOrders({orderType})
       .then((result) => res.send(result))
       .catch(err => res.send(err))
   },
   getCustomerOrders: (req, res) => {
-    db.findCustomer(req.params)
+    const {firstName, lastName, page} = req.params;
+    db.findCustomer({firstName, lastName})
       .then((result) => {
         if (result) {
           let customerId = result._id.valueOf();
-          db.findOrders({ customerId })
+          db.findOrders({ customerId }, page)
             .then(result => res.send(result))
         } else {
           res.send("customer not found")
         }
       })
+  },
+  getAllOrders: (req, res) => {
+    db.findOrders()
+      .then((result) => res.send(result))
+      .catch(err => res.send(err))
   }
 };
