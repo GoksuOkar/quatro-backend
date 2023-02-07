@@ -38,7 +38,7 @@ const orderSchema = new Schema({
   finFromTail: String,
   boxLocation: String,
   rearInsertsFromTail: String,
-  handle: Boolean,
+  handle: String,
   date: {type: Date, default: Date.now},
   orderId: String,
   customerId: String,
