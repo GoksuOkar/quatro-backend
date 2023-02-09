@@ -34,6 +34,7 @@ const orderSchema = new Schema({
   leash: String,
   pads: String,
   waveLocation: String,
+  foilType: String,
   logo: String,
   finFromTail: String,
   boxLocation: String,
