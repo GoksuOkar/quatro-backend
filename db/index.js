@@ -35,17 +35,19 @@ const orderSchema = new Schema({
   pads: String,
   waveLocation: String,
   foilType: String,
+  towWeight: Number,
   logo: String,
   finFromTail: String,
   boxLocation: String,
   rearInsertsFromTail: String,
   handle: String,
-  date: {type: Date, default: Date.now},
+  date: { type: Date, default: Date.now },
   orderId: String,
+  invoiceNum: String,
   customerId: String,
   customerName: String,
   notes: String,
-},);
+});
 
 const customerSchema = new Schema({
   firstName: String,
