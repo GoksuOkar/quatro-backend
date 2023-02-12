@@ -34,17 +34,20 @@ const orderSchema = new Schema({
   leash: String,
   pads: String,
   waveLocation: String,
+  foilType: String,
+  towWeight: Number,
   logo: String,
   finFromTail: String,
   boxLocation: String,
   rearInsertsFromTail: String,
-  handle: Boolean,
-  date: {type: Date, default: Date.now},
+  handle: String,
+  date: { type: Date, default: Date.now },
   orderId: String,
+  invoiceNum: String,
   customerId: String,
   customerName: String,
   notes: String,
-},);
+});
 
 const customerSchema = new Schema({
   firstName: String,
