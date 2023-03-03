@@ -11,10 +11,20 @@ module.exports = {
     .catch((err) => res.send(err));
   },
   editCustomer: (req, res) => {
-    const newInfo = req.body;
-    db.updateCustomer(newInfo).then((result) => {
-      res.send(result)
-    }).catch(err => res.send(err))
+    const _id = req.body._id.valueOf();
+    console.log(req.body)
+    delete req.body._id;
+    db.editCustomer({ _id }, req.body)
+      .then((result) => {
+        res.send(result)
+      })
+      .catch(err => console.log(err));
+  },
+  removeCustomer: (req, res) => {
+    const _id = req.body._id.valueOf();
+    db.deleteCustomer({ _id })
+      .then((result) => {res.end()})
+      .catch((err) => {res.send(err)})
   },
   getCustomerByName: (req, res) => {
     const nameObj = req.params;
