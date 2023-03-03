@@ -75,6 +75,7 @@ module.exports = {
   findCustomer: (input) => (Customer.findOne(input)),
   allCustomers: () => (Customer.find().sort({firstName: 1}).collation({locale: "en", caseLevel: true})),
   editCustomer: (filter, update) => (Customer.findOneAndUpdate(filter, update, {new: true})),
+  deleteCustomer: (filter) => (Customer.deleteOne(filter)),
   createCustomer: (inputObj) => (Customer.create(inputObj)),
   findOrders: (obj) => (Order.find(obj).sort({date: -1})),
   createOrder: (info) => (Order.create(info)),
