@@ -41,13 +41,12 @@ const orderSchema = new Schema({
   boxLocation: String,
   rearInsertsFromTail: String,
   handle: String,
-  date: { type: Date, default: Date.now },
   orderId: String,
   invoiceNum: String,
   customerId: String,
   customerName: String,
   notes: String,
-});
+}, {timestamps: true});
 
 const customerSchema = new Schema({
   firstName: String,
