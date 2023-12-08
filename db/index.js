@@ -37,6 +37,7 @@ const orderSchema = new Schema({
   boardWeight: String,
   dueDate: String,
   finish: String,
+  image: String,
   waveLocation: String,
   foilType: String,
   towWeight: Number,
