@@ -38,6 +38,7 @@ const orderSchema = new Schema({
   dueDate: String,
   finish: String,
   image: String,
+  priority: String,
   waveLocation: String,
   foilType: String,
   towWeight: Number,
