@@ -76,7 +76,8 @@ module.exports = {
       db.incrementSequence()
         .then((result) => {
           const year = getLastTwoDigitsOfYear();
-          const orderId = `FM${year}-${result.seq_value}`;
+          // const orderId = `FM${year}-${result.seq_value}`;
+          const orderId = result.seq_value;
           db.createOrder({...req.body, orderId})
             .then((newResult) => {
               res.send(newResult)
